@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    // "incremental": true,
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "baseUrl": "./",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "outDir": "dist",
+    "noEmitOnError": true,
+    // "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    // "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src"
+  ]
+}
