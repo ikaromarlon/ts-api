@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
-  "type": "module",
   "scripts": {
     "start": "node dist/main.js",
     "dev": "ts-node src/main.ts",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "lint": "eslint \"{src,tests}/**/*.ts\" --fix",
     "test": "jest --no-cache --runInBand"
   },

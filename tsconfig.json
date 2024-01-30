@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    // "incremental": true,
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
@@ -9,16 +8,14 @@
     "sourceMap": true,
     "removeComments": true,
     "outDir": "dist",
-    // "rootDir": "src",
-    // "noEmitOnError": true,
-    // "verbatimModuleSyntax": true,
+    "rootDir": "src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    // "noUncheckedIndexedAccess": true,
     "skipLibCheck": true
   },
   "include": [
-    "src"
+    "src",
+    "tests"
   ]
 }
