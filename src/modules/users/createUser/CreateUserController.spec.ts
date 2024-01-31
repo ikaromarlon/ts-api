@@ -41,7 +41,7 @@ describe(`Unit Test: ${CreateUserController.name}`, () => {
     expect(result.data.message).toBe('generic error')
   })
 
-  it('Should return status 200 and the user created', async () => {
+  it('Should return status 201 and the user created', async () => {
     const { sut, createUserService } = makeSut()
     const spy = jest.spyOn(createUserService, 'execute')
 
@@ -57,7 +57,7 @@ describe(`Unit Test: ${CreateUserController.name}`, () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(userData)
-    expect(result.status).toBe(200)
+    expect(result.status).toBe(201)
     expect(result.data).toHaveProperty('id')
     expect(result.data.name).toBe(userData.name)
     expect(result.data.email).toBe(userData.email)

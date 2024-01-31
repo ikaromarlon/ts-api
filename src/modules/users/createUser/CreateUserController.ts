@@ -1,26 +1,19 @@
+import {
+  type AppRequest,
+  type AppResponse,
+  type AppController,
+  handleSucess,
+  handleError,
+  HttpStatus
+} from 'src/utils/http'
 import { type CreateUserService } from './CreateUserService'
-import { type CreateUserDto } from './CreateUserDto'
 
-interface Controller {
-  handle: (request: any) => Promise<any>
-}
-
-interface CreateUserRequest {
-  body: CreateUserDto
-}
-
-interface ControllerResponse {
-  status: number
-  data: any
-  headers?: any
-}
-
-export class CreateUserController implements Controller {
+export class CreateUserController implements AppController {
   constructor (
     private readonly createUserService: CreateUserService
   ) {}
 
-  public async handle (request: CreateUserRequest): Promise<ControllerResponse> {
+  public async handle (request: AppRequest): Promise<AppResponse> {
     try {
       const { name, email, password } = request.body
 
@@ -28,17 +21,9 @@ export class CreateUserController implements Controller {
 
       const user = await this.createUserService.execute(userData)
 
-      return {
-        status: 200,
-        data: user
-      }
-    } catch (e: any) {
-      return {
-        status: 500,
-        data: {
-          message: e.message
-        }
-      }
+      return handleSucess(user, HttpStatus.CREATED)
+    } catch (e) {
+      return handleError(e as Error)
     }
   }
 }
