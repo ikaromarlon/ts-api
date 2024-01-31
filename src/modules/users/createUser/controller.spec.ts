@@ -1,6 +1,6 @@
-import { CreateUserController } from './CreateUserController'
-import { type User } from 'src/entities/User'
-import { type CreateUserService } from './CreateUserService'
+import CreateUserController from './controller'
+import type CreateUserService from './service'
+import { type User } from '../user.entity'
 
 const makeSut = (): any => {
   const createUserService = {

@@ -1,8 +1,8 @@
 import type { UsersRepository } from 'src/repositories/UsersRepository'
-import type { CreateUserDto } from './CreateUserDto'
-import type { User } from 'src/entities/User'
+import type { CreateUserDto } from './dto'
+import type { User } from '../user.entity'
 
-export class CreateUserService {
+export default class CreateUserService {
   constructor (
     private readonly usersRepository: UsersRepository
   ) {}

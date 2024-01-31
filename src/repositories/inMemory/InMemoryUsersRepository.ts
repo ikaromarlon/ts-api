@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { type User } from 'src/entities/User'
+import { type User } from '../../modules/users/user.entity'
 import { type FilterUserData, type CreateUserData, type UsersRepository } from 'src/repositories/UsersRepository'
 
 export class InMemoryUsersRepository implements UsersRepository {

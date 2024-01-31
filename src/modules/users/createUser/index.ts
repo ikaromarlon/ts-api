@@ -1,6 +1,6 @@
-import { InMemoryUsersRepository } from 'src/repositories/inMemory/InMemoryUsersRepository'
-import { CreateUserService } from './createUser/CreateUserService'
-import { CreateUserController } from './createUser/CreateUserController'
+import CreateUserController from './controller'
+import CreateUserService from './service'
+import { InMemoryUsersRepository } from '../../../repositories/inMemory/InMemoryUsersRepository'
 
 export function createUserFactory (): CreateUserController {
   const usersRepository = new InMemoryUsersRepository()

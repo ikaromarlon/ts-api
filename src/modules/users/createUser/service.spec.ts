@@ -1,5 +1,5 @@
+import CreateUserService from './service'
 import { InMemoryUsersRepository } from '../../../repositories/inMemory/InMemoryUsersRepository'
-import { CreateUserService } from './CreateUserService'
 
 const makeSut = (): any => {
   const inMemoryUsersRepository = new InMemoryUsersRepository()

@@ -2,13 +2,12 @@ import {
   type AppRequest,
   type AppResponse,
   type AppController,
-  handleSucess,
-  handleError,
+  handleSucess, handleError,
   HttpStatus
-} from 'src/utils/http'
-import { type CreateUserService } from './CreateUserService'
+} from '../../../utils/http'
+import type CreateUserService from './service'
 
-export class CreateUserController implements AppController {
+export default class CreateUserController implements AppController {
   constructor (
     private readonly createUserService: CreateUserService
   ) {}
