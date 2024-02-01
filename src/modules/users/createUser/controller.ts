@@ -12,13 +12,15 @@ export default class CreateUserController implements AppController {
     private readonly createUserService: CreateUserService
   ) {}
 
-  public async handle (request: AppRequest): Promise<AppResponse> {
+  public async handle ({ body }: AppRequest): Promise<AppResponse> {
     try {
-      const { name, email, password } = request.body
+      const userData = {
+        name: body.name,
+        email: body.email,
+        password: body.password
+      }
 
-      const userData = { name, email, password }
-
-      const user = await this.createUserService.execute(userData)
+      const { password, ...user } = await this.createUserService.execute(userData)
 
       return handleSucess(user, HttpStatus.CREATED)
     } catch (e) {
