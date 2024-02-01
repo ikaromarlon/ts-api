@@ -2,28 +2,27 @@ import Fastify, { type FastifyInstance } from 'fastify'
 import { setupMiddlewares } from './middlewares'
 import { setupRoutes } from './router'
 
-interface ServerInstance {
-  instance: FastifyInstance | null
-  start: () => Promise<void>
-}
+let srvInstance: FastifyInstance | null = null
 
-const server: ServerInstance = {
-  instance: null,
-  start: async () => {}
-}
-
-export async function Server (): Promise<ServerInstance> {
-  if (server.instance !== null) return server
-
-  server.instance = Fastify({ logger: true })
-
-  await setupMiddlewares(server.instance)
-  await setupRoutes(server.instance)
-
-  server.start = async () => {
-    const address = await server.instance?.listen({ port: 3000 })
-    console.log(`App is running at ${address}/api`)
+export async function Server () {
+  if (srvInstance === null) {
+    srvInstance = Fastify({ logger: true })
+    await setupMiddlewares(srvInstance)
+    await setupRoutes(srvInstance)
   }
 
-  return server
+  return {
+    start: async () => {
+      await srvInstance?.listen({ port: 3000 })
+    },
+    getAddress: () => {
+      if (srvInstance === null) throw new Error('Server is not started')
+      const [{ address, port }] = srvInstance.addresses()
+      return `${address}:${port}/api`
+    },
+    shutDown: async () => {
+      await srvInstance?.close()
+      srvInstance = null
+    }
+  }
 }
