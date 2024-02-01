@@ -18,7 +18,7 @@ export async function Server () {
     getAddress: () => {
       if (srvInstance === null) throw new Error('Server is not started')
       const [{ address, port }] = srvInstance.addresses()
-      return `${address}:${port}/api`
+      return `http://${address}:${port}/api`
     },
     shutDown: async () => {
       await srvInstance?.close()
