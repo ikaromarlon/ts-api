@@ -6,7 +6,7 @@ let srvInstance: FastifyInstance | null = null
 
 export async function Server () {
   if (srvInstance === null) {
-    srvInstance = Fastify({ logger: true })
+    srvInstance = Fastify()
     await setupMiddlewares(srvInstance)
     await setupRoutes(srvInstance)
   }
