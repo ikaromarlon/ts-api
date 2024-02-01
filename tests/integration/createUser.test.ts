@@ -1,4 +1,4 @@
-import { Server } from '../../src/server'
+import { Server } from '../../src/infra/server'
 import { Requester } from '../../src/utils/helpers/request'
 import { faker } from '@faker-js/faker'
 

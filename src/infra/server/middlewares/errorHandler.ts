@@ -1,5 +1,5 @@
 import { type FastifyError, type FastifyInstance, type FastifyReply } from 'fastify'
-import { HttpStatus } from '../../utils/http'
+import { HttpStatus } from '../../../utils/http'
 
 export default async (fastify: FastifyInstance): Promise<void> => {
   fastify.setErrorHandler((error: FastifyError, _, res: FastifyReply) => {

@@ -1,4 +1,4 @@
-import { Server } from './server'
+import { Server } from './infra/server'
 
 async function main (): Promise<void> {
   try {

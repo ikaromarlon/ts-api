@@ -1,7 +1,7 @@
 import { type FastifyReply, type FastifyRequest, type FastifyInstance } from 'fastify'
 import { type HttpHeader } from 'fastify/types/utils'
-import { type AppRoute, type AppController } from '../utils/http'
-import routes from '../routes'
+import { type AppRoute, type AppController } from '../../utils/http'
+import routes from '../../routes'
 
 function adaptRequest (controller: AppController) {
   return async (req: FastifyRequest, res: FastifyReply) => {

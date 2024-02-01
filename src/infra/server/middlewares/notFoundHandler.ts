@@ -1,5 +1,5 @@
 import { type FastifyInstance, type FastifyRequest, type FastifyReply } from 'fastify'
-import { HttpStatus } from '../../utils/http'
+import { HttpStatus } from '../../../utils/http'
 
 export default async (fastify: FastifyInstance): Promise<void> => {
   fastify.setNotFoundHandler((req: FastifyRequest, res: FastifyReply) => {
