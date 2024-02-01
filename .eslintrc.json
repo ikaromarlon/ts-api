@@ -11,7 +11,8 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "@typescript-eslint/unbound-method": "off"
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/explicit-function-return-type": "off"
   },
   "ignorePatterns": [
     "coverage",
