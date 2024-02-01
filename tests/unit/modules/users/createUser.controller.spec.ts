@@ -1,6 +1,6 @@
-import CreateUserController from './controller'
-import type CreateUserService from './service'
-import { type User } from '../user.entity'
+import CreateUserController from '../../../../src/modules/users/createUser/controller'
+import type CreateUserService from '../../../../src/modules/users/createUser/service'
+import { type User } from '../../../../src/modules/users/user.entity'
 
 const makeSut = (): any => {
   const createUserService = {
@@ -59,8 +59,6 @@ describe(`Unit Test: ${CreateUserController.name}`, () => {
     expect(spy).toHaveBeenCalledWith(userData)
     expect(result.status).toBe(201)
     expect(result.data).toHaveProperty('id')
-    expect(result.data.name).toBe(userData.name)
-    expect(result.data.email).toBe(userData.email)
-    expect(result.data.password).toBe(userData.password)
+    expect(result.data).toEqual(expect.objectContaining(userData))
   })
 })
