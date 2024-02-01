@@ -30,7 +30,22 @@ export default {
       description: 'Created successfully',
       content: {
         'application/json': {
-          schema: {}
+          schema: {
+            type: 'object',
+            additionalProperties: false,
+            properties: {
+              id: {
+                type: 'string'
+              },
+              name: {
+                type: 'string'
+              },
+              email: {
+                type: 'string',
+                format: 'email'
+              }
+            }
+          }
         }
       }
     }
