@@ -1,52 +1,56 @@
 import CreateUserService from '../../../../src/modules/users/createUser/service'
-import { InMemoryUsersRepository } from '../../../../src/repositories/inMemory/InMemoryUsersRepository'
+import { type InMemoryUsersRepository } from '../../../../src/repositories/inMemory/InMemoryUsersRepository'
+import { type User } from 'src/modules/users/user.entity'
+import { faker } from '@faker-js/faker'
 
 const makeSut = (): any => {
-  const inMemoryUsersRepository = new InMemoryUsersRepository()
-  const sut = new CreateUserService(inMemoryUsersRepository)
+  const user = {
+    id: faker.string.uuid(),
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
+  }
+
+  const mocks = {
+    inMemoryUsersRepository: {
+      create: jest.fn(async (data): Promise<User> => user),
+      exists: jest.fn(async (): Promise<boolean> => false)
+    } as unknown as InMemoryUsersRepository
+  }
+
+  const sut = new CreateUserService(mocks.inMemoryUsersRepository)
 
   return {
     sut,
-    inMemoryUsersRepository
+    mocks,
+    user
   }
 }
 
 describe(`Unit Test: ${CreateUserService.name}`, () => {
-  it('should create a new user and return it', async () => {
-    const { sut, inMemoryUsersRepository } = makeSut()
-    const spyRepositoryExists = jest.spyOn(inMemoryUsersRepository, 'exists')
-    const spyRepositoryCreate = jest.spyOn(inMemoryUsersRepository, 'create')
+  it('Should create a new user', async () => {
+    const { sut, mocks, user } = makeSut()
 
-    const userData = {
-      name: 'Any Person',
-      email: 'any.person@nicedomain.com',
-      password: '123456'
-    }
+    const { id, ...userData } = user
 
     const result = await sut.execute(userData)
 
-    expect(spyRepositoryExists).toHaveBeenCalledWith({ email: userData.email })
-    expect(spyRepositoryCreate).toHaveBeenCalledWith(userData)
-    expect(result).toHaveProperty('id')
-    expect(result).toEqual(expect.objectContaining(userData))
+    expect(mocks.inMemoryUsersRepository.exists).toHaveBeenCalledWith({ email: userData.email })
+    expect(mocks.inMemoryUsersRepository.create).toHaveBeenCalledWith(userData)
+    expect(result).toEqual(user)
   })
 
-  it('should not create a new user if it already exists', async () => {
-    const { sut, inMemoryUsersRepository } = makeSut()
-    const spyRepositoryExists = jest.spyOn(inMemoryUsersRepository, 'exists').mockResolvedValueOnce(true)
-    const spyRepositoryCreate = jest.spyOn(inMemoryUsersRepository, 'create')
+  it('Should throws an error if user already exists', async () => {
+    const { sut, mocks, user } = makeSut()
+    mocks.inMemoryUsersRepository.exists.mockResolvedValueOnce(true)
 
-    const userData = {
-      name: 'Any Person',
-      email: 'any.person@nicedomain.com',
-      password: '123456'
-    }
+    const { id, ...userData } = user
 
     const result = sut.execute(userData)
 
     await expect(result).rejects.toThrow('User with provided email already exists')
 
-    expect(spyRepositoryExists).toHaveBeenCalledWith({ email: userData.email })
-    expect(spyRepositoryCreate).toHaveBeenCalledTimes(0)
+    expect(mocks.inMemoryUsersRepository.exists).toHaveBeenCalledWith({ email: userData.email })
+    expect(mocks.inMemoryUsersRepository.create).toHaveBeenCalledTimes(0)
   })
 })

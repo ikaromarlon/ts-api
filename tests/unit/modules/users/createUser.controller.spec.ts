@@ -1,64 +1,62 @@
 import CreateUserController from '../../../../src/modules/users/createUser/controller'
 import type CreateUserService from '../../../../src/modules/users/createUser/service'
 import { type User } from '../../../../src/modules/users/user.entity'
+import { faker } from '@faker-js/faker'
 
-const makeSut = (): any => {
-  const createUserService = {
-    execute: async (): Promise<User> => ({
-      id: '',
-      name: '',
-      email: '',
-      password: ''
-    })
-  } as unknown as CreateUserService
+const setupSut = (): any => {
+  const user = {
+    id: faker.string.uuid(),
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
+  }
 
-  const sut = new CreateUserController(createUserService)
+  const mocks = {
+    createserService: {
+      execute: jest.fn(async (): Promise<User> => user)
+    } as unknown as CreateUserService
+  }
+
+  const sut = new CreateUserController(mocks.createserService)
 
   return {
     sut,
-    createUserService
+    mocks,
+    user
   }
 }
 
 describe(`Unit Test: ${CreateUserController.name}`, () => {
-  it('Should return status 500', async () => {
-    const { sut, createUserService } = makeSut()
-    const spy = jest.spyOn(createUserService, 'execute').mockRejectedValue(new Error('generic error'))
+  it('Should execute createUser service and return success', async () => {
+    const { sut, mocks, user } = setupSut()
 
-    const userData = {
-      name: '',
-      email: '',
-      password: ''
-    }
+    const { id, ...requestData } = user
 
     const result = await sut.handle({
-      body: userData
+      body: requestData
     })
 
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(userData)
-    expect(result.status).toBe(500)
-    expect(result.data.message).toBe('generic error')
+    const { password, ...responseData } = user
+
+    expect(mocks.createUserService.execute).toHaveBeenCalledTimes(1)
+    expect(mocks.createUserService.execute).toHaveBeenCalledWith(requestData)
+    expect(result.status).toBe(201)
+    expect(result.data).toEqual(expect.objectContaining(responseData))
   })
 
-  it('Should return status 201 and the user created', async () => {
-    const { sut, createUserService } = makeSut()
-    const spy = jest.spyOn(createUserService, 'execute')
+  it('Should return error if service throws an error', async () => {
+    const { sut, mocks, user } = setupSut()
+    mocks.createUserService.execute.mockRejectedValue(new Error('generic error'))
 
-    const userData = {
-      name: '',
-      email: '',
-      password: ''
-    }
+    const { id, ...requestData } = user
 
     const result = await sut.handle({
-      body: userData
+      body: requestData
     })
 
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(userData)
-    expect(result.status).toBe(201)
-    expect(result.data).toHaveProperty('id')
-    expect(result.data).toEqual(expect.objectContaining(userData))
+    expect(mocks.createUserService.execute).toHaveBeenCalledTimes(1)
+    expect(mocks.createUserService.execute).toHaveBeenCalledWith(requestData)
+    expect(result.status).toBe(500)
+    expect(result.data.message).toBe('generic error')
   })
 })
