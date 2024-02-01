@@ -1,6 +1,6 @@
 import CreateUserController from '../../../../src/modules/users/createUser/controller'
 import type CreateUserService from '../../../../src/modules/users/createUser/service'
-import { type User } from '../../../../src/modules/users/user.entity'
+import { type User } from '../../../../src/entities/User'
 import { faker } from '@faker-js/faker'
 
 const setupSut = (): any => {

@@ -1,4 +1,4 @@
-import { type User } from '../modules/users/user.entity'
+import { type User } from '../entities/User'
 
 export type CreateUserData = Omit<User, 'id'>
 

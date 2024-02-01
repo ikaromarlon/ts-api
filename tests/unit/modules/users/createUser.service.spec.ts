@@ -1,6 +1,6 @@
 import CreateUserService from '../../../../src/modules/users/createUser/service'
 import { type InMemoryUsersRepository } from '../../../../src/repositories/inMemory/InMemoryUsersRepository'
-import { type User } from '../../../../src/modules/users/user.entity'
+import { type User } from '../../../../src/entities/User'
 import { faker } from '@faker-js/faker'
 
 const makeSut = (): any => {
