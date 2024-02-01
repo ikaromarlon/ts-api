@@ -1,4 +1,4 @@
-import type { UsersRepository } from 'src/repositories/UsersRepository'
+import type { UsersRepository } from '../../../repositories/UsersRepository'
 import type { CreateUserDto } from './dto'
 import type { User } from '../user.entity'
 

@@ -12,12 +12,12 @@ const setupSut = (): any => {
   }
 
   const mocks = {
-    createserService: {
+    createUserService: {
       execute: jest.fn(async (): Promise<User> => user)
     } as unknown as CreateUserService
   }
 
-  const sut = new CreateUserController(mocks.createserService)
+  const sut = new CreateUserController(mocks.createUserService)
 
   return {
     sut,

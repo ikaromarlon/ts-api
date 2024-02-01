@@ -1,5 +1,3 @@
-export interface CreateUserDto {
-  name: string
-  email: string
-  password: string
-}
+import { type User } from '../user.entity'
+
+export type CreateUserDto = Omit<User, 'id'>
