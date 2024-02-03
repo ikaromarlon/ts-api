@@ -1,4 +1,4 @@
-import { Server } from '../../src/infra/server'
+import { getServer } from '../../src/infra/server'
 import { Requester } from '../../src/utils/helpers/request'
 import { faker } from '@faker-js/faker'
 
@@ -9,9 +9,9 @@ describe('Integration Test: Create User (POST /users)', () => {
 
   beforeAll(async () => {
     requester = Requester()
-    server = await Server()
+    server = await getServer()
     await server.start()
-    url = server.getAddress()
+    url = `${server.getAddress()}/api`
   })
 
   afterAll(async () => {

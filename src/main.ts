@@ -1,8 +1,8 @@
-import { Server } from './infra/server'
+import { getServer } from './infra/server'
 
 async function main (): Promise<void> {
   try {
-    const server = await Server()
+    const server = await getServer()
     await server.start()
     console.log(`App is running at ${server.getAddress()}`)
   } catch (e: any) {

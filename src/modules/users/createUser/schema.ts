@@ -4,9 +4,9 @@ export default {
   summary: 'Create a new user',
   description: 'Create a new user',
   operationId: 'createUser',
-  security: [{
-    jwt: []
-  }],
+  // security: [{
+  //   jwt: []
+  // }],
   body: {
     type: 'object',
     additionalProperties: false,
