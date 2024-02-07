@@ -18,7 +18,7 @@ import { type AppResponse, HttpStatus } from './protocols'
  * const response = handleSuccess({ message: 'Success!' });
  * // response is { data: { message: 'Success!' }, status: 200, headers: {} }
  */
-export function handleSucess (
+export function handleSuccess (
   data: any,
   status: HttpStatus = HttpStatus.OK,
   headers: Record<string, unknown> = {}

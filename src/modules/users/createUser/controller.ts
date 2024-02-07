@@ -2,7 +2,7 @@ import {
   type AppRequest,
   type AppResponse,
   type AppController,
-  handleSucess, handleError,
+  handleSuccess, handleError,
   HttpStatus
 } from '../../../utils/http'
 import type CreateUserService from './service'
@@ -22,7 +22,7 @@ export default class CreateUserController implements AppController {
 
       const { password, ...user } = await this.createUserService.execute(userData)
 
-      return handleSucess(user, HttpStatus.CREATED)
+      return handleSuccess(user, HttpStatus.CREATED)
     } catch (e) {
       return handleError(e as Error)
     }
