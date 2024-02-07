@@ -1,0 +1,6 @@
+{
+  "*.js": [
+    "npm run lint",
+    "npm test -- --passWithNoTests --findRelatedTests"
+  ]
+}
