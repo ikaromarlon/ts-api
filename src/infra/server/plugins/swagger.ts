@@ -14,17 +14,17 @@ export default async (fastify: FastifyInstance) => {
       deepLinking: true
     },
     logo: {
-      type: 'image/png',
-      content: fs.readFileSync('./docs/assets/logo.png')
+      type: 'image/svg+xml',
+      content: fs.readFileSync('./docs/assets/logo.svg')
     },
     theme: {
       favicon: [
         {
-          filename: 'favicon.png',
+          filename: 'logo.svg',
           rel: 'icon',
           sizes: '16x16',
-          type: 'image/png',
-          content: fs.readFileSync('./docs/assets/favicon.png')
+          type: 'image/svg+xml',
+          content: fs.readFileSync('./docs/assets/logo.svg')
         }
       ]
     }

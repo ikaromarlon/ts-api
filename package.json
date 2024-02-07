@@ -1,18 +1,19 @@
 {
   "name": "ts-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/main.js",
+  "version": "0.0.1",
+  "description": "Comprehensive REST API Boilerplate leveraging the power of TypeScript and Fastify",
+  "author": {
+    "name": "Icaro Silva",
+    "email": "ikaromarlon@gmail.com"
+  },
+  "license": "UNLICENSED",
   "scripts": {
     "start": "node dist/main.js",
     "dev": "nodemon",
-    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "test": "jest --no-cache --runInBand",
     "lint": "eslint \"{src,tests}/**/*.ts\" --fix",
-    "test": "jest --no-cache --runInBand"
+    "build": "rimraf dist && tsc -p tsconfig.build.json"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^9.0.0",
     "@fastify/swagger": "^8.14.0",

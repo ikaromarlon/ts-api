@@ -1,8 +1,8 @@
 {
   "openapi": {
     "info": {
-      "title": "ts-api",
-      "summary": "",
+      "title": "User API",
+      "summary": "Comprehensive REST API Boilerplate leveraging the power of Node.js and Fastify.",
       "description": "",
       "termsOfService": "http://swagger.io/terms/",
       "contact": {
