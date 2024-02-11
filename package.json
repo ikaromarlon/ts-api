@@ -14,6 +14,7 @@
     "lint": "eslint \"{src,tests}/**/*.ts\" --fix",
     "lint:staged": "lint-staged",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "docker": "docker compose down && docker compose up",
     "prepare": "husky"
   },
   "dependencies": {

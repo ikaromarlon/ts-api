@@ -12,7 +12,8 @@
       "runtimeArgs": [
         "--env-file=.env",
         "-r",
-        "ts-node/register/transpile-only"
+        "ts-node/register"
+        // "ts-node/register/transpile-only"
       ],
       "program": "${workspaceRoot}/src/main.ts",
       "restart": true,
