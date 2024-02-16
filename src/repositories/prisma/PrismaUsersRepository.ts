@@ -1,7 +1,7 @@
 import { getPrismaClient } from '../../infra/database/prisma'
 import { type PrismaClient } from '@prisma/client'
-import { type User } from '../../modules/users/User.entity'
-import { type FilterUserData, type CreateUserData, type UsersRepository } from '../UsersRepository'
+import { type User, type FilterUserData, type CreateUserData, type UpdateUserData } from '../../modules/users/User.entity'
+import { type UsersRepository } from '../UsersRepository'
 
 export default class PrismaUsersRepository implements UsersRepository {
   private readonly db: PrismaClient
@@ -10,15 +10,23 @@ export default class PrismaUsersRepository implements UsersRepository {
     this.db = getPrismaClient().getInstance()
   }
 
+  async exists (filter: FilterUserData): Promise<boolean> {
+    const count = await this.db.user.count({ where: filter })
+    return count > 0
+  }
+
   async create (data: CreateUserData): Promise<User> {
     const user = await this.db.user.create({ data })
     return user
   }
 
-  async exists (filter: FilterUserData): Promise<boolean> {
-    const count = await this.db.user.count({
-      where: { email: filter.email }
-    })
-    return count > 0
+  async update (id: string, data: UpdateUserData): Promise<User> {
+    const user = await this.db.user.update({ where: { id }, data })
+    return user
+  }
+
+  async findOne (filter: FilterUserData): Promise<User | null> {
+    const user = await this.db.user.findFirst({ where: filter })
+    return user
   }
 }

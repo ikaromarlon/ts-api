@@ -1,10 +1,13 @@
-import { type User } from '../modules/users/User.entity'
-
-export type CreateUserData = Omit<User, 'id'>
-
-export type FilterUserData = Partial<User>
+import {
+  type CreateUserData,
+  type FilterUserData,
+  type UpdateUserData,
+  type User
+} from '../modules/users/User.entity'
 
 export interface UsersRepository {
-  create: (data: CreateUserData) => Promise<User>
   exists: (filter: FilterUserData) => Promise<boolean>
+  create: (data: CreateUserData) => Promise<User>
+  update: (id: string, data: UpdateUserData) => Promise<User>
+  findOne: (filter: FilterUserData) => Promise<User | null>
 }

@@ -9,4 +9,4 @@ export type CreateUserData = Omit<User, 'id'>
 
 export type UpdateUserData = Partial<CreateUserData>
 
-export type FilterUserData = Partial<User>
+export type FilterUserData = Partial<Pick<User, 'id' | 'email'>>
