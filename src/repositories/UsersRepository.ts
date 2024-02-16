@@ -10,4 +10,5 @@ export interface UsersRepository {
   create: (data: CreateUserData) => Promise<User>
   update: (id: string, data: UpdateUserData) => Promise<User>
   findOne: (filter: FilterUserData) => Promise<User | null>
+  delete: (id: string) => Promise<User | null>
 }

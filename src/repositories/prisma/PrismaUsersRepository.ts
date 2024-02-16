@@ -29,4 +29,14 @@ export default class PrismaUsersRepository implements UsersRepository {
     const user = await this.db.user.findFirst({ where: filter })
     return user
   }
+
+  async delete (id: string): Promise<User | null> {
+    try {
+      const user = await this.db.user.delete({ where: { id } })
+      return user
+    } catch (e: any) {
+      if (e.code === 'P2025') return null
+      throw e
+    }
+  }
 }
