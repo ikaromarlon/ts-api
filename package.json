@@ -10,8 +10,9 @@
   "scripts": {
     "start": "node dist/main.js",
     "dev": "nodemon",
-    "test": "jest --no-cache --runInBand",
-    "test:unit": "jest --no-cache --runInBand --config tests/jest.config.unit.ts",
+    "test": "jest --runInBand",
+    "test:unit": "jest --config tests/jest.config.unit.ts",
+    "test:integration": "jest --runInBand --config tests/jest.config.integration.ts",
     "lint": "eslint \"{src,tests}/**/*.ts\" --fix",
     "lint:staged": "lint-staged",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
