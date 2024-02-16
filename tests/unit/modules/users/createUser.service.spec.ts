@@ -11,10 +11,10 @@ const makeSut = (): any => {
     password: faker.internet.password()
   }
 
-  const usersRepository: UsersRepository = {
-    create: jest.fn(async (data): Promise<User> => user),
-    exists: jest.fn(async (): Promise<boolean> => false)
-  }
+  const usersRepository = {
+    exists: jest.fn(async (): Promise<boolean> => false),
+    create: jest.fn(async (): Promise<User> => user)
+  } as unknown as UsersRepository
 
   const mocks = {
     usersRepository
