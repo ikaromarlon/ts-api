@@ -17,6 +17,10 @@ export default class UpdateUserService {
 
     const user = await this.usersRepository.update(id, data)
 
+    if (!user) {
+      throw new Error('User not found')
+    }
+
     return user
   }
 }

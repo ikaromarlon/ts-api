@@ -20,9 +20,14 @@ export default class PrismaUsersRepository implements UsersRepository {
     return user
   }
 
-  async update (id: string, data: UpdateUserData): Promise<User> {
-    const user = await this.db.user.update({ where: { id }, data })
-    return user
+  async update (id: string, data: UpdateUserData): Promise<User | null> {
+    try {
+      const user = await this.db.user.update({ where: { id }, data })
+      return user
+    } catch (e: any) {
+      if (e.code === 'P2025') return null
+      throw e
+    }
   }
 
   async findOne (filter: FilterUserData): Promise<User | null> {

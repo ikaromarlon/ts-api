@@ -1,5 +1,5 @@
 import { type AppRequest, type AppResponse, type AppController } from '../../../utils/http'
-import { handleSuccess, handleError, HttpStatus } from '../../../utils/http'
+import { handleSuccess, handleError } from '../../../utils/http'
 import type { UpdateUserData } from '../User.entity'
 import type UpdateUserService from './service'
 
@@ -20,7 +20,7 @@ export default class UpdateUserController implements AppController {
 
       const user = await this.updateUserService.execute(id, userData)
 
-      return handleSuccess(user, HttpStatus.OK)
+      return handleSuccess(user)
     } catch (e) {
       return handleError(e as Error)
     }
