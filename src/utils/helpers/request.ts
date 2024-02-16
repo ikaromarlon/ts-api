@@ -31,6 +31,7 @@ export function Requester () {
     post: async (url: string, options: RequestOptions) => await makeRequest({ url, method: 'POST', ...options }),
     get: async (url: string, options: RequestOptions) => await makeRequest({ url, method: 'GET', ...options }),
     put: async (url: string, options: RequestOptions) => await makeRequest({ url, method: 'PUT', ...options }),
-    patch: async (url: string, options: RequestOptions) => await makeRequest({ url, method: 'PATCH', ...options })
+    patch: async (url: string, options: RequestOptions) => await makeRequest({ url, method: 'PATCH', ...options }),
+    delete: async (url: string, options: RequestOptions) => await makeRequest({ url, method: 'DELETE', ...options })
   }
 }
