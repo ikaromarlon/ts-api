@@ -18,7 +18,7 @@ export default class UpdateUserController implements AppController {
         password: request.body.password
       }
 
-      const { password, ...user } = await this.updateUserService.execute(id, userData)
+      const user = await this.updateUserService.execute(id, userData)
 
       return handleSuccess(user, HttpStatus.OK)
     } catch (e) {

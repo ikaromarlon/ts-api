@@ -16,7 +16,7 @@ export default class CreateUserController implements AppController {
         password: request.body.password
       }
 
-      const { password, ...user } = await this.createUserService.execute(userData)
+      const user = await this.createUserService.execute(userData)
 
       return handleSuccess(user, HttpStatus.CREATED)
     } catch (e) {
