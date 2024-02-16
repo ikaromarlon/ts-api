@@ -1,6 +1,6 @@
 import type { UsersRepository } from '../../../repositories/UsersRepository'
 import type { CreateUserDto } from './dto'
-import type { User } from '../../../entities/User'
+import type { User } from '../User.entity'
 
 export default class CreateUserService {
   constructor (
