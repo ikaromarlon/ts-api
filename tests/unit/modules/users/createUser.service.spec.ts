@@ -50,7 +50,7 @@ describe(`Unit Test: ${CreateUserService.name}`, () => {
 
     const result = sut.execute(userData)
 
-    await expect(result).rejects.toThrow('User with provided email already exists')
+    await expect(result).rejects.toThrow('User with email provided already exists')
 
     expect(mocks.usersRepository.exists).toHaveBeenCalledWith({ email: userData.email })
     expect(mocks.usersRepository.create).toHaveBeenCalledTimes(0)

@@ -46,6 +46,6 @@ describe('Integration Test: Create User (POST /users)', () => {
     const response = await requester.post(`${url}/users`, { data })
 
     expect(response.status).toBe(500)
-    expect(response.data).toEqual({ message: 'User with provided email already exists' })
+    expect(response.data).toEqual({ message: 'User with email provided already exists' })
   })
 })
