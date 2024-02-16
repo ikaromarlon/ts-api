@@ -1,5 +1,5 @@
-import CreateUserController from '../../../../src/modules/users/createUser/controller'
-import type CreateUserService from '../../../../src/modules/users/createUser/service'
+import UpdateUserController from '../../../../src/modules/users/updateUser/controller'
+import type UpdateUserService from '../../../../src/modules/users/updateUser/service'
 import { type User } from '../../../../src/modules/users/User.entity'
 import { faker } from '@faker-js/faker'
 
@@ -12,12 +12,12 @@ const setupSut = (): any => {
   }
 
   const mocks = {
-    createUserService: {
+    updateUserService: {
       execute: jest.fn(async (): Promise<User> => user)
-    } as unknown as CreateUserService
+    } as unknown as UpdateUserService
   }
 
-  const sut = new CreateUserController(mocks.createUserService)
+  const sut = new UpdateUserController(mocks.updateUserService)
 
   return {
     sut,
@@ -26,34 +26,36 @@ const setupSut = (): any => {
   }
 }
 
-describe(`Unit Test: ${CreateUserController.name}`, () => {
-  it('Should execute createUser service and return success', async () => {
+describe(`Unit Test: ${UpdateUserController.name}`, () => {
+  it('Should execute updateUser service and return success', async () => {
     const { sut, mocks, user } = setupSut()
 
     const { id, ...requestData } = user
 
     const result = await sut.handle({
+      params: { id },
       body: requestData
     })
 
     const { password, ...responseData } = user
 
-    expect(mocks.createUserService.execute).toHaveBeenCalledWith(requestData)
-    expect(result.status).toBe(201)
+    expect(mocks.updateUserService.execute).toHaveBeenCalledWith(id, requestData)
+    expect(result.status).toBe(200)
     expect(result.data).toEqual(expect.objectContaining(responseData))
   })
 
   it('Should return error if service throws an error', async () => {
     const { sut, mocks, user } = setupSut()
-    mocks.createUserService.execute.mockRejectedValue(new Error('generic error'))
+    mocks.updateUserService.execute.mockRejectedValue(new Error('generic error'))
 
     const { id, ...requestData } = user
 
     const result = await sut.handle({
+      params: { id },
       body: requestData
     })
 
-    expect(mocks.createUserService.execute).toHaveBeenCalledWith(requestData)
+    expect(mocks.updateUserService.execute).toHaveBeenCalledWith(id, requestData)
     expect(result.status).toBe(500)
     expect(result.data.message).toBe('generic error')
   })
