@@ -68,4 +68,19 @@ describe('Integration Test: Update User (PUT /users/:id)', () => {
     expect(response.status).toBe(500)
     expect(response.data).toEqual({ message: 'There is another user using the email provided' })
   })
+
+  it('Should not find user to be updated ', async () => {
+    const user = {
+      id: faker.string.uuid(),
+      name: faker.person.fullName(),
+      email: faker.internet.email()
+    }
+
+    const { id, ...data } = user
+
+    const response = await requester.put(`${url}/users/${id}`, { data })
+
+    expect(response.status).toBe(500)
+    expect(response.data).toEqual({ message: 'User not found' })
+  })
 })

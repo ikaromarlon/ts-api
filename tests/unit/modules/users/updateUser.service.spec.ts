@@ -42,7 +42,7 @@ describe(`Unit Test: ${UpdateUserService.name}`, () => {
     expect(result).toEqual(user)
   })
 
-  it('Should throws an error if another user already uses the email provided', async () => {
+  it('Should throw an error if another user already uses the email provided', async () => {
     const { sut, mocks, user } = makeSut()
 
     const existingUser = {
@@ -60,5 +60,20 @@ describe(`Unit Test: ${UpdateUserService.name}`, () => {
 
     expect(mocks.usersRepository.findOne).toHaveBeenCalledWith({ email: userData.email })
     expect(mocks.usersRepository.update).toHaveBeenCalledTimes(0)
+  })
+
+  it('Should throw an error if not find user', async () => {
+    const { sut, mocks, user } = makeSut()
+
+    mocks.usersRepository.update.mockResolvedValueOnce(null)
+
+    const { id, ...userData } = user
+
+    const result = sut.execute(id, userData)
+
+    await expect(result).rejects.toThrow('User not found')
+
+    expect(mocks.usersRepository.findOne).toHaveBeenCalledWith({ email: userData.email })
+    expect(mocks.usersRepository.update).toHaveBeenCalledWith(id, userData)
   })
 })
