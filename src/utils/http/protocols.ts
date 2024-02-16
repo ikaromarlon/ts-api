@@ -8,16 +8,16 @@ export enum HttpStatus {
 }
 
 export interface AppRequest {
-  headers: any
-  params: any
-  query: any
+  headers: Record<string, any>
+  params: Record<string, any>
+  query: Record<string, any>
   body: any
 }
 
 export interface AppResponse {
   data: any
   status: HttpStatus
-  headers: any
+  headers: Record<string, any>
 }
 
 export interface AppController {
@@ -28,5 +28,5 @@ export interface AppRoute {
   method: 'POST' | 'GET' | 'PUT' | 'PATCH' | 'DELETE'
   url: string
   handler: AppController
-  schema?: any
+  schema?: Record<string, any>
 }

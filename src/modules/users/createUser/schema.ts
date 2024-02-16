@@ -4,9 +4,6 @@ export default {
   summary: 'Create a new user',
   description: 'Create a new user',
   operationId: 'createUser',
-  // security: [{
-  //   jwt: []
-  // }],
   body: {
     type: 'object',
     additionalProperties: false,
@@ -27,7 +24,7 @@ export default {
   },
   response: {
     [HttpStatus.CREATED]: {
-      description: 'Created successfully',
+      description: 'Success',
       content: {
         'application/json': {
           schema: {

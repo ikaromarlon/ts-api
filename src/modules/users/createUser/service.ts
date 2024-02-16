@@ -1,20 +1,19 @@
 import type { UsersRepository } from '../../../repositories/UsersRepository'
-import type { CreateUserDto } from './dto'
-import type { User } from '../User.entity'
+import type { User, CreateUserData } from '../User.entity'
 
 export default class CreateUserService {
   constructor (
     private readonly usersRepository: UsersRepository
   ) {}
 
-  public async execute ({ name, email, password }: CreateUserDto): Promise<User> {
-    const userExists = await this.usersRepository.exists({ email })
+  public async execute (data: CreateUserData): Promise<User> {
+    const userExists = await this.usersRepository.exists({ email: data.email })
 
     if (userExists) {
       throw new Error('User with provided email already exists')
     }
 
-    const user = await this.usersRepository.create({ name, email, password })
+    const user = await this.usersRepository.create(data)
 
     return user
   }

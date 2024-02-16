@@ -1,10 +1,6 @@
-import {
-  type AppRequest,
-  type AppResponse,
-  type AppController,
-  handleSuccess, handleError,
-  HttpStatus
-} from '../../../utils/http'
+import { type AppRequest, type AppResponse, type AppController } from '../../../utils/http'
+import { handleSuccess, handleError, HttpStatus } from '../../../utils/http'
+import { type CreateUserData } from '../User.entity'
 import type CreateUserService from './service'
 
 export default class CreateUserController implements AppController {
@@ -12,12 +8,12 @@ export default class CreateUserController implements AppController {
     private readonly createUserService: CreateUserService
   ) {}
 
-  public async handle ({ body }: AppRequest): Promise<AppResponse> {
+  public async handle (request: AppRequest): Promise<AppResponse> {
     try {
-      const userData = {
-        name: body.name,
-        email: body.email,
-        password: body.password
+      const userData: CreateUserData = {
+        name: request.body.name,
+        email: request.body.email,
+        password: request.body.password
       }
 
       const { password, ...user } = await this.createUserService.execute(userData)

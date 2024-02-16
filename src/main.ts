@@ -7,12 +7,13 @@ async function main (): Promise<void> {
     await prisma.connect()
 
     const server = await getServer()
-
     await server.start()
 
     console.log('App is running at', server.getAddress())
   } catch (e) {
-    console.log('App failed to start...', e)
+    console.log('Something went wrong...', e)
+
+    process.exit(1)
   }
 }
 

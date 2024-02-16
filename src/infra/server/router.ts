@@ -1,6 +1,6 @@
 import { type FastifyReply, type FastifyRequest, type FastifyInstance } from 'fastify'
 import { type HttpHeader } from 'fastify/types/utils'
-import { type AppRoute, type AppController } from '../../utils/http'
+import { type AppRoute, type AppController, type AppRequest } from '../../utils/http'
 import routes from '../../routes'
 
 function adaptRequest (controller: AppController) {
@@ -12,7 +12,7 @@ function adaptRequest (controller: AppController) {
       body: req.body
     }
 
-    const { status, headers, data } = await controller.handle(request)
+    const { status, headers, data } = await controller.handle(request as AppRequest)
 
     return await res
       .status(status)
