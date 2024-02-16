@@ -11,6 +11,7 @@
     "start": "node dist/main.js",
     "dev": "nodemon",
     "test": "jest --no-cache --runInBand",
+    "test:unit": "jest --no-cache --runInBand --config tests/jest.config.unit.ts",
     "lint": "eslint \"{src,tests}/**/*.ts\" --fix",
     "lint:staged": "lint-staged",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
