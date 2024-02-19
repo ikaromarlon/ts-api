@@ -13,7 +13,8 @@ export default class CreateUserController implements AppController {
       const userData: CreateUserData = {
         name: request.body.name,
         email: request.body.email,
-        password: request.body.password
+        password: request.body.password,
+        isActive: request.body.isActive
       }
 
       const user = await this.createUserService.execute(userData)

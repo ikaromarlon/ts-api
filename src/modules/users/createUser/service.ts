@@ -13,7 +13,12 @@ export default class CreateUserService {
       throw new Error('User with email provided already exists')
     }
 
-    const user = await this.usersRepository.create(data)
+    const userData = {
+      ...data,
+      isActive: data.isActive ?? true
+    }
+
+    const user = await this.usersRepository.create(userData)
 
     return user
   }

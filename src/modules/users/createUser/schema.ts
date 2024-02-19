@@ -19,6 +19,9 @@ export default {
       password: {
         type: 'string',
         format: 'password'
+      },
+      isActive: {
+        type: 'boolean'
       }
     }
   },
@@ -40,6 +43,9 @@ export default {
               email: {
                 type: 'string',
                 format: 'email'
+              },
+              isActive: {
+                type: 'boolean'
               }
             }
           }

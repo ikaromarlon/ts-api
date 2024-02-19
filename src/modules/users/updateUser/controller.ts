@@ -15,7 +15,8 @@ export default class UpdateUserController implements AppController {
       const userData: UpdateUserData = {
         name: request.body.name,
         email: request.body.email,
-        password: request.body.password
+        password: request.body.password,
+        isActive: request.body.isActive
       }
 
       const user = await this.updateUserService.execute(id, userData)
