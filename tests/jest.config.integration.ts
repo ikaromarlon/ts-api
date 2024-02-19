@@ -6,6 +6,12 @@ const config: Config = {
   roots: [
     '<rootDir>/src',
     '<rootDir>/tests/integration'
+  ],
+  collectCoverage: false,
+  coverageDirectory: '<rootDir>/coverage/integration',
+  collectCoverageFrom: [
+    '<rootDir>/src/modules/**/*.ts',
+    '<rootDir>/src/modules/**/*.ts'
   ]
 }
 
