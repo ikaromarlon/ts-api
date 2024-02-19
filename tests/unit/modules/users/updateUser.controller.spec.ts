@@ -8,7 +8,8 @@ const setupSut = (): any => {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
     email: faker.internet.email(),
-    password: faker.internet.password()
+    password: faker.internet.password(),
+    isActive: true
   }
 
   const mocks = {
@@ -37,7 +38,9 @@ describe(`Unit Test: ${UpdateUserController.name}`, () => {
       body: requestData
     })
 
-    const { password, ...responseData } = user
+    const { password, ...otherData } = user
+
+    const responseData = { id, ...otherData }
 
     expect(mocks.updateUserService.execute).toHaveBeenCalledWith(id, requestData)
     expect(result.status).toBe(200)

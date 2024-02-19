@@ -3,12 +3,13 @@ import { type User } from '../../../../src/modules/users/User.entity'
 import { faker } from '@faker-js/faker'
 import { type UsersRepository } from '../../../../src/repositories/UsersRepository'
 
-const makeSut = (): any => {
+const setupSut = (): any => {
   const user = {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
     email: faker.internet.email(),
-    password: faker.internet.password()
+    password: faker.internet.password(),
+    isActive: true
   }
 
   const usersRepository = {
@@ -31,7 +32,7 @@ const makeSut = (): any => {
 
 describe(`Unit Test: ${CreateUserService.name}`, () => {
   it('Should create a new user', async () => {
-    const { sut, mocks, user } = makeSut()
+    const { sut, mocks, user } = setupSut()
 
     const { id, ...userData } = user
 
@@ -42,8 +43,39 @@ describe(`Unit Test: ${CreateUserService.name}`, () => {
     expect(result).toEqual(user)
   })
 
+  it('Should create a new inactive user', async () => {
+    const { sut, mocks, user } = setupSut()
+
+    const inactiveUser = {
+      ...user,
+      isActive: false
+    }
+
+    mocks.usersRepository.create.mockResolvedValueOnce(inactiveUser)
+
+    const { id, ...userData } = inactiveUser
+
+    const result = await sut.execute(userData)
+
+    expect(mocks.usersRepository.exists).toHaveBeenCalledWith({ email: userData.email })
+    expect(mocks.usersRepository.create).toHaveBeenCalledWith(userData)
+    expect(result).toEqual(inactiveUser)
+  })
+
+  it('Should create a new user with default isActive status (true)', async () => {
+    const { sut, mocks, user } = setupSut()
+
+    const { id, isActive, ...userData } = user
+
+    const result = await sut.execute(userData)
+
+    expect(mocks.usersRepository.exists).toHaveBeenCalledWith({ email: userData.email })
+    expect(mocks.usersRepository.create).toHaveBeenCalledWith({ ...userData, isActive: true })
+    expect(result).toEqual(user)
+  })
+
   it('Should throws an error if user already exists', async () => {
-    const { sut, mocks, user } = makeSut()
+    const { sut, mocks, user } = setupSut()
     mocks.usersRepository.exists.mockResolvedValueOnce(true)
 
     const { id, ...userData } = user

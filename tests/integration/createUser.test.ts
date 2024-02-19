@@ -18,34 +18,72 @@ describe('Integration Test: Create User (POST /users)', () => {
     await server.shutDown()
   })
 
-  it('Should be able to create a new user', async () => {
-    const data = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: faker.internet.password()
-    }
+  describe('Success', () => {
+    it('Should be able to create a new active user', async () => {
+      const data = {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        isActive: true
+      }
 
-    const response = await requester.post(`${url}/users`, { data })
+      const response = await requester.post(`${url}/users`, { data })
 
-    const { password, ...otherData } = data
+      const { password, ...otherData } = data
 
-    expect(response.status).toBe(201)
-    expect(response.data).toEqual(expect.objectContaining(otherData))
-    expect(response.data).toHaveProperty('id')
+      expect(response.status).toBe(201)
+      expect(response.data).toEqual(expect.objectContaining(otherData))
+      expect(response.data).toHaveProperty('id')
+    })
+
+    it('Should be able to create a new inactive user', async () => {
+      const data = {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        isActive: false
+      }
+
+      const response = await requester.post(`${url}/users`, { data })
+
+      const { password, ...otherData } = data
+
+      expect(response.status).toBe(201)
+      expect(response.data).toEqual(expect.objectContaining(otherData))
+      expect(response.data).toHaveProperty('id')
+    })
+
+    it('Should be able to create a new user with default isActive status (true)', async () => {
+      const data = {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password()
+      }
+
+      const response = await requester.post(`${url}/users`, { data })
+
+      const { password, ...otherData } = data
+
+      expect(response.status).toBe(201)
+      expect(response.data).toEqual(expect.objectContaining(otherData))
+      expect(response.data).toHaveProperty('id')
+    })
   })
 
-  it('Should not be able to create the same user twice', async () => {
-    const data = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: faker.internet.password()
-    }
+  describe('Failure', () => {
+    it('Should not be able to create user twice (same email)', async () => {
+      const data = {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: faker.internet.password()
+      }
 
-    await requester.post(`${url}/users`, { data })
+      await requester.post(`${url}/users`, { data })
 
-    const response = await requester.post(`${url}/users`, { data })
+      const response = await requester.post(`${url}/users`, { data })
 
-    expect(response.status).toBe(500)
-    expect(response.data).toEqual({ message: 'User with email provided already exists' })
+      expect(response.status).toBe(500)
+      expect(response.data).toEqual({ message: 'User with email provided already exists' })
+    })
   })
 })

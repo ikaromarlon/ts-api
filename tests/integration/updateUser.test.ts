@@ -23,7 +23,7 @@ describe('Integration Test: Update User (PUT /users/:id)', () => {
   })
 
   it('Should be able to update user', async () => {
-    const user = await db.user.create({
+    const { password, ...user } = await db.user.create({
       data: {
         name: faker.person.fullName(),
         email: faker.internet.email(),
@@ -32,13 +32,14 @@ describe('Integration Test: Update User (PUT /users/:id)', () => {
     })
 
     const data = {
-      name: faker.person.fullName()
+      name: faker.person.fullName(),
+      isActive: false
     }
 
     const response = await requester.put(`${url}/users/${user.id}`, { data })
 
     expect(response.status).toBe(200)
-    expect(response.data).toEqual(expect.objectContaining(data))
+    expect(response.data).toEqual(expect.objectContaining({ ...user, ...data }))
   })
 
   it('Should not be able to update user if another user is using the email provided ', async () => {

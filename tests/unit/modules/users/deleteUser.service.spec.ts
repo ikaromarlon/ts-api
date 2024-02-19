@@ -3,12 +3,13 @@ import { type User } from '../../../../src/modules/users/User.entity'
 import { faker } from '@faker-js/faker'
 import { type UsersRepository } from '../../../../src/repositories/UsersRepository'
 
-const makeSut = (): any => {
+const setupSut = (): any => {
   const user = {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
     email: faker.internet.email(),
-    password: faker.internet.password()
+    password: faker.internet.password(),
+    isActive: true
   }
 
   const usersRepository = {
@@ -30,7 +31,7 @@ const makeSut = (): any => {
 
 describe(`Unit Test: ${DeleteUserService.name}`, () => {
   it('Should delete user', async () => {
-    const { sut, mocks, user } = makeSut()
+    const { sut, mocks, user } = setupSut()
 
     const { id } = user
 
@@ -41,7 +42,7 @@ describe(`Unit Test: ${DeleteUserService.name}`, () => {
   })
 
   it('Should throw an error if not find user', async () => {
-    const { sut, mocks, user } = makeSut()
+    const { sut, mocks, user } = setupSut()
 
     mocks.usersRepository.delete.mockResolvedValueOnce(null)
 

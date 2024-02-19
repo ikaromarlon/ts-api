@@ -3,12 +3,13 @@ import { type User } from '../../../../src/modules/users/User.entity'
 import { faker } from '@faker-js/faker'
 import { type UsersRepository } from '../../../../src/repositories/UsersRepository'
 
-const makeSut = (): any => {
+const setupSut = (): any => {
   const user = {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
     email: faker.internet.email(),
-    password: faker.internet.password()
+    password: faker.internet.password(),
+    isActive: true
   }
 
   const usersRepository = {
@@ -31,7 +32,7 @@ const makeSut = (): any => {
 
 describe(`Unit Test: ${UpdateUserService.name}`, () => {
   it('Should update user data', async () => {
-    const { sut, mocks, user } = makeSut()
+    const { sut, mocks, user } = setupSut()
 
     const { id, ...userData } = user
 
@@ -43,7 +44,7 @@ describe(`Unit Test: ${UpdateUserService.name}`, () => {
   })
 
   it('Should throw an error if another user already uses the email provided', async () => {
-    const { sut, mocks, user } = makeSut()
+    const { sut, mocks, user } = setupSut()
 
     const existingUser = {
       id: faker.string.uuid(),
@@ -63,7 +64,7 @@ describe(`Unit Test: ${UpdateUserService.name}`, () => {
   })
 
   it('Should throw an error if not find user', async () => {
-    const { sut, mocks, user } = makeSut()
+    const { sut, mocks, user } = setupSut()
 
     mocks.usersRepository.update.mockResolvedValueOnce(null)
 
